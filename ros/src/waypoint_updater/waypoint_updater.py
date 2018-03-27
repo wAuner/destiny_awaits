@@ -5,6 +5,7 @@ from geometry_msgs.msg import PoseStamped
 from styx_msgs.msg import Lane, Waypoint
 
 import math
+import numpy as np
 
 '''
 This node will publish waypoints from the car's current position to some `x` distance ahead.
@@ -38,15 +39,32 @@ class WaypointUpdater(object):
 
         # TODO: Add other member variables you need below
 
+        self.base_waypoints = None
+        self.closest_waypoint_id = 0
+
+
         rospy.spin()
 
     def pose_cb(self, msg):
-        # TODO: Implement
-        pass
+        # check if base waypoints have been loaded
+        if not self.base_waypoints:
+            return
+
+        # TODO: Find the index of the closest waypoint in self.base_waypoints
+        # Finding the closest waypoint is not trivial because there is an edge case where the car is about to pass
+        # the closest waypoint detected using euclidean distance only.
+        # Therefore the waypoints orientation and the cars current orientation has to be taken in account.
+        # Join the discussion on the forum to see how the problem can solved.
+        # Find the forum thread here: https://discussions.udacity.com/t/how-can-we-tell-if-the-car-have-past-the-nearest-waypoint-or-not/381909
+
+
+        # TODO: Create a list of the upcoming waypoints
+
+        # TODO: Broadcast upcoming waypoints to /final_waypoints
+
 
     def waypoints_cb(self, waypoints):
-        # TODO: Implement
-        pass
+        self.base_waypoints = waypoints.waypoints
 
     def traffic_cb(self, msg):
         # TODO: Callback for /traffic_waypoint message. Implement
