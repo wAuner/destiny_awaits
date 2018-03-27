@@ -5,18 +5,23 @@ this is our team repo, not the official one.
 
 # Workflow and naming conventions
 
+Note: **Do not clone the repo into a Dropbox or similar folder! This can cause serious conflicts with git.**
+
 Instead of forks  we are working from a central repo. Every teammember is supposed to clone the repo and work on his own branch. 
-The branches will then be pushed to github and there they will be merged into master. Do not merge locally and then push master.
+The branches will then be pushed to github and there a pull request is opened and then they will be merged into master if everything is ok. Do not merge locally and then push master.
 Naming convention for branches: **[name]_[task]**
 
-Workflow:
-1. `git branch [branch_name]`
-2. `git checkout [branch_name]`
-3. write your code
-4. when you are finished push your branch to origin which creates a branch there with the same name: `git push -u origin [branch_name]`
-5. on github create a pullrequest for this newly created branch so that it can be merged 
 
-test
+Workflow:
+1. create a new branch for the task: `git branch [branch_name]`
+2. checkout that branch: `git checkout [branch_name]`
+3. write your code, add and commit to your branch
+4. once you are finished push your branch to origin which creates a branch there with the same name: `git push -u origin [branch_name]`
+5. on github create a pullrequest for this newly created branch so that it can be merged 
+6. When your pullrequest was merged, you need to checkout your local `master` branch and perform a pull so that your master matches the origin: `git checkout master` followed by `git pull origin`
+
+If I missed something, let me know.
+
 
 ## Original Readme
 
