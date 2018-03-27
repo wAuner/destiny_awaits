@@ -13,6 +13,7 @@ Naming convention for branches: **[name]_[task]**
 
 
 **Workflow**:
+0. before you create a new branch, make sure that your master branch up to speed by `git pull origin` while you are on your master branch
 1. create a new branch for the task: `git branch [branch_name]`
 2. checkout that branch: `git checkout [branch_name]`
 3. write your code, add and commit to your branch
