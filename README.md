@@ -5,14 +5,14 @@ this is our team repo, not the official one.
 
 # :construction_worker: Workflow and naming conventions
 
-Note: **Do not clone the repo into a Dropbox or similar folder! This can cause serious conflicts with git.**
+Note: :exclamation: **Do not clone the repo into a Dropbox or similar folder! This can cause serious conflicts with git.** :exclamation:
 
 Instead of forks  we are working from a central repo. Every teammember is supposed to clone the repo and work on his own branch. 
 The branches will then be pushed to github and there a pull request is opened and then they will be merged into master if everything is ok. Do not merge locally and then push master.
 Naming convention for branches: **[name]_[task]**
 
 
-Workflow:
+**Workflow**:
 1. create a new branch for the task: `git branch [branch_name]`
 2. checkout that branch: `git checkout [branch_name]`
 3. write your code, add and commit to your branch
