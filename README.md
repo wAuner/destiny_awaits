@@ -3,6 +3,19 @@
 
 this is our team repo, not the official one.
 
+# Workflow and naming conventions
+
+Instead of forks and pull requests we are working from a central repo. Every teammember is supposed to clone the repo and work on his own branch. 
+The branches will then be pushed to github and there they will be merged into master. Do not merge locally and then push master.
+Naming convention for branches: **[name]_[task]**
+
+Workflow:
+1. `git branch [branch_name]`
+2. `git checkout [branch_name]`
+3. write your code
+4. when you are finished: `git push -u origin [branch_name]`
+
+
 
 ## Original Readme
 
