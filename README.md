@@ -24,6 +24,10 @@ Naming convention for branches: **[name]_[task]**
 
 If I missed something, let me know :shipit:.
 
+## Project structure
+
+![](imgs/final-project-ros-graph-v2.png)
+
 
 ## :blue_book: Original Readme
 
