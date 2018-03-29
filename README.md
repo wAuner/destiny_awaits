@@ -2,6 +2,9 @@
 # :fire: Team Repo destiny_awaits :fire:
 
 this is our team repo, not the official one.
+all project management is done in our meistertask board
+
+:point_right:[Meistertask Board](https://www.meistertask.com/projects/1pvbqtkz1f/join/):point_left:
 
 # :construction_worker: Workflow and naming conventions
 
