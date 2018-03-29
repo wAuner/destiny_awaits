@@ -41,7 +41,33 @@ If I missed something, let me know :shipit:.
     
 4. Waypoint Updater (Full): Use `/traffic_waypoint` to change the waypoint target velocities before publishing to `/final_waypoints`. Your car should now stop at red traffic lights and move when they are green.
 
-
+### Message overview Waypoint Updater Node (Partial)
+<table class="index--table--YF7cZ index--table-striped--1QFWN">
+<thead>
+<tr>
+<th><strong>Topic</strong></th>
+<th><strong>Msg Type</strong></th>
+<th><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/base_waypoints</td>
+<td>styx_msgs/Lane</td>
+<td>Waypoints as provided by a static .csv file.</td>
+</tr>
+<tr>
+<td>/current_pose</td>
+<td>geometry_msgs/PoseStamped</td>
+<td>Current position of the vehicle, provided by the simulator or localization.</td>
+</tr>
+<tr>
+<td>/final_waypoints</td>
+<td>styx_msgs/Lane</td>
+<td>This is a subset of /base_waypoints. The first waypoint is the one in /base_waypoints which is closest to the car.</td>
+</tr>
+</tbody>
+</table>
 
 ## :blue_book: Original Readme
 
