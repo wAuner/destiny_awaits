@@ -21,6 +21,7 @@ Naming convention for branches: **[name]_[task]**
 4. once you are finished push your branch to origin which creates a branch there with the same name: `git push -u origin [branch_name]`
 5. on github create a pullrequest for this newly created branch so that it can be merged 
 6. When your pullrequest was merged, you need to checkout your local `master` branch and perform a pull so that your master matches the origin: `git checkout master` followed by `git pull origin`
+7. **Don't forget to write a documentation in the wiki!**
 
 If I missed something, let me know :shipit:.
 
