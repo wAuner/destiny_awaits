@@ -35,17 +35,19 @@ class DBWNode(object):
     def __init__(self):
         rospy.init_node('dbw_node')
 
-        vehicle_mass = rospy.get_param('~vehicle_mass', 1736.35)
-        fuel_capacity = rospy.get_param('~fuel_capacity', 13.5)
-        brake_deadband = rospy.get_param('~brake_deadband', .1)
-        decel_limit = rospy.get_param('~decel_limit', -5)
-        accel_limit = rospy.get_param('~accel_limit', 1.)
-        wheel_radius = rospy.get_param('~wheel_radius', 0.2413)
-        wheel_base = rospy.get_param('~wheel_base', 2.8498)
-        steer_ratio = rospy.get_param('~steer_ratio', 14.8)
-        max_lat_accel = rospy.get_param('~max_lat_accel', 3.)
-        max_steer_angle = rospy.get_param('~max_steer_angle', 8.)
-
+        params
+        {
+            vehicle_mass = rospy.get_param('~vehicle_mass', 1736.35)
+            fuel_capacity = rospy.get_param('~fuel_capacity', 13.5)
+            brake_deadband = rospy.get_param('~brake_deadband', .1)
+            decel_limit = rospy.get_param('~decel_limit', -5)
+            accel_limit = rospy.get_param('~accel_limit', 1.)
+            wheel_radius = rospy.get_param('~wheel_radius', 0.2413)
+            wheel_base = rospy.get_param('~wheel_base', 2.8498)
+            steer_ratio = rospy.get_param('~steer_ratio', 14.8)
+            max_lat_accel = rospy.get_param('~max_lat_accel', 3.)
+            max_steer_angle = rospy.get_param('~max_steer_angle', 8.)
+        }
         self.steer_pub = rospy.Publisher('/vehicle/steering_cmd',
                                          SteeringCmd, queue_size=1)
         self.throttle_pub = rospy.Publisher('/vehicle/throttle_cmd',
@@ -55,8 +57,17 @@ class DBWNode(object):
 
         # TODO: Create `Controller` object
         # self.controller = Controller(<Arguments you wish to provide>)
+        self.controller = Controller(params)
+
+        self.linear_vel = 0
+        self.angular_vel = 0
+        self.current_velocity = 0 
+        self.enabled = false
 
         # TODO: Subscribe to all the topics you need to
+        self.enabled_sub = rospy.Subscribe('/vehicle/dbw_enabled', Bool, self.enabled_fc, queue_size=1)
+        self.cur_vel_sub = rospy.Subscribe('/current_velocity', TwistStamped, self.current_vel_fc, queue_size=1)
+        self.twist_cmd_sub = rospy.Subscribe('/twist_cmd',TwistStamped, self.twist_cmd_fc, queue_size=1 )
 
         self.loop()
 
@@ -65,13 +76,14 @@ class DBWNode(object):
         while not rospy.is_shutdown():
             # TODO: Get predicted throttle, brake, and steering using `twist_controller`
             # You should only publish the control commands if dbw is enabled
-            # throttle, brake, steering = self.controller.control(<proposed linear velocity>,
-            #                                                     <proposed angular velocity>,
-            #                                                     <current linear velocity>,
-            #                                                     <dbw status>,
-            #                                                     <any other argument you need>)
-            # if <dbw is enabled>:
-            #   self.publish(throttle, brake, steer)
+            throttle, brake, steering = self.controller.control(self.linear_vel,
+                                                                self.angular_vel,
+                                                                self.current_velocity,
+                                                                self.enabled)
+            if enabled:
+                self.publish(throttle, brake, steering)
+
+
             rate.sleep()
 
     def publish(self, throttle, brake, steer):
@@ -91,6 +103,17 @@ class DBWNode(object):
         bcmd.pedal_cmd_type = BrakeCmd.CMD_TORQUE
         bcmd.pedal_cmd = brake
         self.brake_pub.publish(bcmd)
+
+
+    def enabled_fc(self, msg)
+        self.enabled = msg.data
+
+    def current_vel_fc(self,msg)
+        self.current_velocity = msg.twist.linear.x
+
+    def twist_cmd_fc(self,msg)
+        self.linear_vel = msg.twist.linear.x
+        self.angular_vel = msg.twist.angular.z
 
 
 if __name__ == '__main__':
