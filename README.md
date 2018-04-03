@@ -14,6 +14,7 @@ Instead of forks  we are working from a central repo. Every teammember is suppos
 The branches will then be pushed to github and there a pull request is opened and then they will be merged into master if everything is ok. Do not merge locally and then push master.
 Naming convention for branches: **[name]_[task]**
 
+**IMPORTANT:** :exclamation: :exclamation: :exclamation: Every function or method must have a meaningful docstring which describes its purpose, arguments including argmuent type and the return value. :exclamation: :exclamation: :exclamation:
 
 **Workflow**:
 
