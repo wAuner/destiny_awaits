@@ -20,7 +20,6 @@ Please note that our simulator also provides the exact location of traffic light
 current status in `/vehicle/traffic_lights` message. You can use this message to build this node
 as well as to verify your TL classifier.
 
-TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
 LOOKAHEAD_WPS = 200 # Number of waypoints we will publish. You can change this number
@@ -37,7 +36,7 @@ class WaypointUpdater(object):
 
 
         self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
-
+        
         # contains a list of (x,y) tuples for all waypoints
         self.waypoints_2d = None
         # KD tree of the x,y waypoints to increase lookup time
@@ -106,10 +105,10 @@ class WaypointUpdater(object):
 
 
 
-    def waypoints_cb(self, waypoints):
+    def waypoints_cb(self, waypoint_msg):
         """
         Task: Processes the waypoints message which contains all of the track's waypoints in map coordinates. 
-              Needs only to run once.
+              Needs only to run once, because the waypoints are sent only once at the beginning.
         arguments:
         - waypoints: message type styx_msgs/Lane
         returns: Nothing
@@ -156,9 +155,9 @@ class WaypointUpdater(object):
                 float64 z     
         
         """
-        self.base_waypoints_msg = waypoints
+        self.base_waypoints_msg = waypoint_msg
         if not self.waypoints_2d:
-            self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
+            self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoint_msg.waypoints]
             self.waypoint_tree = KDTree(self.waypoints_2d)
 
     def publish_waypoints(self, closest_idx):
@@ -211,7 +210,7 @@ class WaypointUpdater(object):
         
         """
         lane = Lane()
-        lane.waypoints = self.base_waypoints_msg[closest_idx:closest_idx + LOOKAHEAD_WPS]
+        lane.waypoints = self.base_waypoints_msg.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
         self.final_waypoints_pub.publish(lane)
 
     def get_nearest_waypoint_idx(self):
