@@ -2,6 +2,9 @@
 # :fire: Team Repo destiny_awaits :fire:
 
 this is our team repo, not the official one.
+all project management is done in our meistertask board
+
+:point_right:[Meistertask Board](https://www.meistertask.com/projects/1pvbqtkz1f/join/):point_left:
 
 # :construction_worker: Workflow and naming conventions
 
@@ -11,6 +14,7 @@ Instead of forks  we are working from a central repo. Every teammember is suppos
 The branches will then be pushed to github and there a pull request is opened and then they will be merged into master if everything is ok. Do not merge locally and then push master.
 Naming convention for branches: **[name]_[task]**
 
+**IMPORTANT:** :exclamation: :exclamation: :exclamation: Every function or method must have a meaningful docstring which describes its purpose, arguments including argmuent type and the return value. :exclamation: :exclamation: :exclamation:
 
 **Workflow**:
 
@@ -21,6 +25,7 @@ Naming convention for branches: **[name]_[task]**
 4. once you are finished push your branch to origin which creates a branch there with the same name: `git push -u origin [branch_name]`
 5. on github create a pullrequest for this newly created branch so that it can be merged 
 6. When your pullrequest was merged, you need to checkout your local `master` branch and perform a pull so that your master matches the origin: `git checkout master` followed by `git pull origin`
+7. **Don't forget to write a documentation in the wiki!**
 
 If I missed something, let me know :shipit:.
 
@@ -28,6 +33,46 @@ If I missed something, let me know :shipit:.
 
 ![](imgs/final-project-ros-graph-v2.png)
 
+### Suggested order from classroom
+
+
+1.  Waypoint Updater Node (Partial): Complete a partial waypoint updater which subscribes to `/base_waypoints` and `/current_pose` and publishes to `/final_waypoints`.
+2.  DBW Node: Once your waypoint updater is publishing `/final_waypoints`, the waypoint_follower node will start publishing messages to the `/twist_cmd topic`. At this point, you have everything needed to build the dbw_node. After completing this step, the car should drive in the simulator, ignoring the traffic lights.
+3. Traffic Light Detection: This can be split into 2 parts:
+
+    3.1 Detection: Detect the traffic light and its color from the `/image_color`. The topic `/vehicle/traffic_lights` contains the exact location and status of all traffic lights in simulator, so you can test your output.
+    
+    3.2 Waypoint publishing: Once you have correctly identified the traffic light and determined its position, you can convert it to a waypoint index and publish it.
+    
+4. Waypoint Updater (Full): Use `/traffic_waypoint` to change the waypoint target velocities before publishing to `/final_waypoints`. Your car should now stop at red traffic lights and move when they are green.
+
+### Message overview Waypoint Updater Node (Partial)
+<table class="index--table--YF7cZ index--table-striped--1QFWN">
+<thead>
+<tr>
+<th><strong>Topic</strong></th>
+<th><strong>Msg Type</strong></th>
+<th><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/base_waypoints</td>
+<td>styx_msgs/Lane</td>
+<td>Waypoints as provided by a static .csv file.</td>
+</tr>
+<tr>
+<td>/current_pose</td>
+<td>geometry_msgs/PoseStamped</td>
+<td>Current position of the vehicle, provided by the simulator or localization.</td>
+</tr>
+<tr>
+<td>/final_waypoints</td>
+<td>styx_msgs/Lane</td>
+<td>This is a subset of /base_waypoints. The first waypoint is the one in /base_waypoints which is closest to the car.</td>
+</tr>
+</tbody>
+</table>
 
 ## :blue_book: Original Readme
 
