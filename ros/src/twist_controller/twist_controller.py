@@ -47,18 +47,20 @@ class Controller(object):
 
     	diff_vel = linear_vel - current_velocity
 
-    	speed = self.pid_accel.step(diff_vel, 1./50.)
 
 
 
     	steer = self.yaw_cont.get_steering(linear_vel,angular_vel,current_velocity)
 
-        
 
         brake = 0
-        throttle = 0
+        throttle = self.pid_accel.step(diff_vel, 1./50.)
 
-        
+        if linear_vel == 0. and current_velocity < 0.1:
+            throttle = 0
+            brake = 400
+        elif throttle < 0.1 and diff_vel < 0:
+            brake = abs(max(self.decel_limit,diff_vel))* self.vehicle_mass*self.wheel_radius
 
-        return speed, brake, steer
+        return throttle, brake, steer
 

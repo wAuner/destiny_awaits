@@ -66,9 +66,9 @@ class DBWNode(object):
 		self.enabled = False
 
 		# TODO: Subscribe to all the topics you need to
-		rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.enabled_fc, queue_size=1)
-		rospy.Subscriber('/current_velocity', TwistStamped, self.current_vel_fc, queue_size=1)
-		rospy.Subscriber('/twist_cmd',TwistStamped, self.twist_cmd_fc, queue_size=1 )
+		rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.enabled_cb, queue_size=1)
+		rospy.Subscriber('/current_velocity', TwistStamped, self.current_vel_cb, queue_size=1)
+		rospy.Subscriber('/twist_cmd',TwistStamped, self.twist_cmd_cb, queue_size=1 )
 
 		rospy.logwarn("init done")
 
@@ -112,15 +112,93 @@ class DBWNode(object):
 		self.brake_pub.publish(bcmd)
 
 
-	def enabled_fc(self, msg):
+	def enabled_cb(self, msg):
+		"""
+        
+        Task: Get the enabled flag
+        arguments:
+        - msg: message type std_msgs/Bool Message
+
+        returns: Nothing
+
+        ROS integration
+        ===        
+        Type: Callback
+        Topic: /vehicle/dbw_enabled
+        msg_type: std_msgs/Bool Message
+
+        std_msgs/Bool Message
+          bool data    
+		"""
+
 		self.enabled = msg
 		#rospy.logwarn("Get enabled : ")
 
-	def current_vel_fc(self,msg):
+	def current_vel_cb(self,msg):
+
+		"""
+        
+        Task: Get the current velocity
+        arguments:
+        - msg: message type geometry_msgs/Twist Message
+
+        returns: Nothing
+
+        ROS integration
+        ===        
+        Type: Callback
+        Topic: /current_velocity
+        msg_type: geometry_msgs/Twist Message
+
+        std_msgs/Header header
+          uint32 seq
+          time stamp
+          string frame_id
+        geometry_msgs/Twist.msg
+          geometry_msgs/Vector3 linear
+            float64 x
+            float64 y
+            float64 z
+          geometry_msgs/Vector3 angular
+            float64 x
+            float64 y
+            float64 z      
+		"""
+
 		self.current_velocity = msg.twist.linear.x
 		#rospy.logwarn("current_vel_fc")
 
-	def twist_cmd_fc(self,msg):
+	def twist_cmd_cb(self,msg):
+
+		"""
+        
+        Task: Get the twist for steering
+        arguments:
+        - msg: message type geometry_msgs/Twist Message
+
+        returns: Nothing
+
+        ROS integration
+        ===        
+        Type: Callback
+        Topic: /twist_cmd
+        msg_type: geometry_msgs/Twist Message
+
+        std_msgs/Header header
+          uint32 seq
+          time stamp
+          string frame_id
+        geometry_msgs/Twist.msg
+          geometry_msgs/Vector3 linear
+            float64 x
+            float64 y
+            float64 z
+          geometry_msgs/Vector3 angular
+            float64 x
+            float64 y
+            float64 z      
+		"""
+
 		self.linear_vel = msg.twist.linear.x
 		self.angular_vel = msg.twist.angular.z
 		
