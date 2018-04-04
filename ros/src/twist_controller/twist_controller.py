@@ -1,9 +1,16 @@
 import pid as PID
 import yaw_controller 
 import lowpass
+import rospy
 
 GAS_DENSITY = 2.858
 ONE_MPH = 0.44704
+
+
+wheel_base = 0
+steer_ratio = 0
+max_lat_accel = 0
+max_steer_angle = 0
 
 
 class Controller(object):
@@ -21,21 +28,37 @@ class Controller(object):
         self.max_lat_accel = parmams['max_lat_accel']
         self.max_steer_angle = parmams['max_steer_angle']
 
-        self.pid_accel = PID.PID(0.3,0.005,0.01, mn = self.decel_limit, mx = self.accel_limit)
-
-        self.yaw_cont = yaw_controller.init(wheel_base,steer_ratio, 0, max_lat_accel,max_steer_angle)
+        self.pid_accel = PID.PID(0.3,0.05,0.05, mn = self.decel_limit, mx = self.accel_limit)
 
 
 
-        pass
+
+        self.yaw_cont = yaw_controller.YawController(self.wheel_base,self.steer_ratio, 0.1, self.max_lat_accel,self.max_steer_angle)
+
+        self.vel_LP = lowpass.LowPassFilter(0.5,0.02)
 
     def control(self, linear_vel,angular_vel,current_velocity,enabled):
         
+        if not enabled:
+            self.pid_accel.reset()
+            return 0.,0.,0.
+
+        current_velocity = self.vel_LP.filt(current_velocity)
+
     	diff_vel = linear_vel - current_velocity
 
-    	speed = self.pid_accel.step(diff_vel, 1/50)
+    	speed = self.pid_accel.step(diff_vel, 1./50.)
+
+
 
     	steer = self.yaw_cont.get_steering(linear_vel,angular_vel,current_velocity)
 
-        return 1., 0., steer
+        
+
+        brake = 0
+        throttle = 0
+
+        
+
+        return speed, brake, steer
 
