@@ -17,12 +17,15 @@ STATE_COUNT_THRESHOLD = 3
 
 class TLDetector(object):
     def __init__(self):
-        rospy.init_node('tl_detector')
 
+        # set log_level to DEBUG mode in order to log traffic light ground truth
+        rospy.init_node('tl_detector', log_level=rospy.DEBUG)
+        
         self.pose = None
         self.waypoints = None
         self.camera_image = None
         self.lights = []
+        self.has_image = True
 
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
@@ -130,6 +133,7 @@ class TLDetector(object):
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
+        
 
         '''
         Publish upcoming red lights at camera frequency.
@@ -141,6 +145,17 @@ class TLDetector(object):
             self.state_count = 0
             self.state = state
         elif self.state_count >= STATE_COUNT_THRESHOLD:
+            
+            # log simulator ground truth
+            if state == 0:
+                log_state = "red"
+            elif state == 1:
+                log_state = "yellow"
+            else:
+                log_state = "green"
+            rospy.logdebug('next traffic light idx %s, state: %s', 
+               light_wp, log_state)
+            
             self.last_state = self.state
             light_wp = light_wp if state == TrafficLight.RED else -1
             self.last_wp = light_wp
@@ -208,11 +223,11 @@ class TLDetector(object):
             car_wp_idx = self.get_closest_waypoint(self.pose.pose)
 
             # Find the closest visible traffic light (if one exists)
-            diff = len(self.waypoints.waypoints)
+            diff = len(self.waypoints_2d)
             for i, light in enumerate(self.lights):
                 # Get stop line waypoint index
                 line = stop_line_positions[i]
-                temp_wp_idx = self.get_closest_waypoint(light[0], light[1])
+                temp_wp_idx = self.get_closest_waypoint(light.pose.pose)
                 # find closest stop line waypoint index
                 d = temp_wp_idx - car_wp_idx
                 if d >= 0 and d < diff:
