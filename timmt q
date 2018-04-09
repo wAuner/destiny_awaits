@@ -1,0 +1,272 @@
+[33mcommit 279d69dec4840c277a3d7373a3afe993d2a44187[m
+Merge: 5bc348c 3e507e0
+Author: adai183 <andreas.daiminger@gmail.com>
+Date:   Thu Apr 5 14:05:21 2018 +0200
+
+    Merge branch 'master' into Markus_DBW_Node for local testing
+
+[33mcommit 3e507e06e371866cc27b3879e2e95170e34ad05c[m
+Merge: ea4cada 725c251
+Author: adai183 <andreas.daiminger@gmail.com>
+Date:   Wed Apr 4 20:13:39 2018 +0200
+
+    Merge branch 'master' of https://github.com/wAuner/destiny_awaits into wa_waypoint_updater
+
+[33mcommit 5bc348c32e4b54f338a7c0b0f0c5254347cff161[m
+Merge: 04f6f12 201f974
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 14:59:52 2018 +0200
+
+    Merge remote-tracking branch 'origin/Markus_DBW_Node' into Markus_DBW_Node
+
+[33mcommit 04f6f12855158ef3ed7cd33b435aed4f8e8f83f1[m
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 14:59:17 2018 +0200
+
+    Auto stash before merge of "Markus_DBW_Node" and "origin/Markus_DBW_Node"
+
+[33mcommit 12d2d169f96dc63c5a214d982e79e8744a19a544[m
+Merge: 9a374ad e670752
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 14:57:33 2018 +0200
+
+    Brakes and comments
+
+[33mcommit 201f974fe9b8eb2adbfec53ccb5838ca4127f6d8[m
+Merge: 9a374ad e670752
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 14:57:33 2018 +0200
+
+    Merge remote-tracking branch 'origin/Markus_DBW_Node' into Markus_DBW_Node
+
+[33mcommit 9a374ad98645f22157af2c5327ba870c646e8f6c[m
+Merge: fa99a5d 2fb2ecd
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 14:25:45 2018 +0200
+
+    Merge remote-tracking branch 'origin/Markus_DBW_Node' into Markus_DBW_Node
+
+[33mcommit e6707521e9990b86e9aaf80476ff1164eca75695[m
+Merge: fa99a5d 2fb2ecd
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 14:25:45 2018 +0200
+
+    Merge remote-tracking branch 'origin/Markus_DBW_Node' into Markus_DBW_Node
+
+[33mcommit fa99a5debf5b0455da01f0b2ed6f9c5b88b70afc[m
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 13:23:43 2018 +0200
+
+    new version of dbw with bugfixing and parameter tweaking
+
+[33mcommit 2fb2ecd15a746ddc1ea766ad813bf00500e7bfc0[m
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 13:23:43 2018 +0200
+
+    Auto stash before merge of "Markus_DBW_Node" and "wa_waypoint_updater"
+    
+    new version of dbw with bugfixing
+
+[33mcommit d12f7ba4565170a674cf1f97f5a8a75c98474f7a[m
+Merge: 2f26eb3 ea4cada
+Author: Unknown <sqare@gmx.de>
+Date:   Wed Apr 4 09:49:05 2018 +0200
+
+    Merge branch 'wa_waypoint_updater' into Markus_DBW_Node
+
+[33mcommit ea4cada33489e0584f07cf2397722ddbe1de240f[m
+Author: mimi <venice@posteo.us>
+Date:   Wed Apr 4 08:48:46 2018 +0200
+
+    tested and works. ROS must be started before the simulator!
+
+[33mcommit 65f8292501996da13feb0bef2e29d4a666dc4552[m
+Author: mimi <venice@posteo.us>
+Date:   Tue Apr 3 14:36:28 2018 +0200
+
+    waypoint updater not tested yet
+
+[33mcommit 725c2514858f41d39224a1bd10d70cefde3575a7[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Apr 3 10:28:56 2018 +0200
+
+    Update README.md
+
+[33mcommit 2f26eb3fa8400be848e9913ca957931b55e28b22[m
+Merge: 0853f57 4ed0999
+Author: Unknown <sqare@gmx.de>
+Date:   Mon Apr 2 09:01:28 2018 +0200
+
+    Merge remote-tracking branch 'origin/Markus_DBW_Node' into Markus_DBW_Node
+
+[33mcommit 0853f5741396b73aac607779cda4a9a561b42627[m
+Author: Unknown <sqare@gmx.de>
+Date:   Mon Apr 2 07:36:57 2018 +0200
+
+    First implementation of controler
+    
+    the implementation needs to be tested, currently without lowpass
+
+[33mcommit 4ed09997d8703ee7a1beb9322f2f7f822e50225b[m
+Author: Unknown <sqare@gmx.de>
+Date:   Mon Apr 2 07:36:57 2018 +0200
+
+    21
+    
+    3
+
+[33mcommit 4ac19e123f2f89f85ec4b7bf90a85b70b0c9d4c5[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Thu Mar 29 16:38:25 2018 +0200
+
+    Update README.md
+
+[33mcommit 17828a0832b52e9010a00434e4f44f23c8b2dbe6[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Thu Mar 29 16:38:25 2018 +0200
+
+    Update README.md
+
+[33mcommit 411d4a450164da8527a2f4f0de96431b5f4ffdc7[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Thu Mar 29 14:54:58 2018 +0200
+
+    Update README.md
+
+[33mcommit 39912dd24aecc645845933e7d7d13215638f95a9[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Thu Mar 29 14:50:18 2018 +0200
+
+    add msg table
+
+[33mcommit 7b7441494c5b74f05f30f398384c4e49ac18caee[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Thu Mar 29 14:08:19 2018 +0200
+
+    add classroom notes
+
+[33mcommit bc169a2ce5987670b207647cb2fa7f42a1763761[m
+Author: mimi <venice@posteo.us>
+Date:   Wed Mar 28 13:28:34 2018 +0200
+
+    update readme
+
+[33mcommit 95b99f4e58a9bf4ec02065b33a68e01a99e19400[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 16:40:53 2018 +0200
+
+    fix typos
+
+[33mcommit c1cd046979bd6e5bd7ae0bb3968716fa64c8ff8c[m
+Merge: d96d19b d0d926c
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 13:27:27 2018 +0200
+
+    Merge pull request #6 from wAuner/andreas_waypoint_updater_partial
+    
+    load /base_waypoints and setup TODOs
+
+[33mcommit d0d926c8c82eb31aea6b93451c236e2991e1868c[m
+Author: adai183 <andreas.daiminger@gmail.com>
+Date:   Tue Mar 27 13:05:06 2018 +0200
+
+    load /base_waypoints and setup TODOs
+
+[33mcommit d96d19bbb2aae9888f86b9b1c509809bd77bd570[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 12:31:00 2018 +0200
+
+    Update README.md
+
+[33mcommit 4006403a3bbeb139782eb835b453866f0452d709[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 12:30:19 2018 +0200
+
+    Update README.md
+
+[33mcommit 553a243de29a92b61d41d120e96db003f322fa23[m
+Merge: af6d45f d3e4aeb
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 11:08:49 2018 +0200
+
+    Merge pull request #5 from wAuner/wa_update_readme
+    
+    Wa update readme
+
+[33mcommit d3e4aeb382ebb32704ef75cc598bc88de0ec6534[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 11:07:14 2018 +0200
+
+    Update README.md
+
+[33mcommit 2bfefce3fd0409b474bc0e18fc9a6f1c5d3b533b[m
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 11:02:51 2018 +0200
+
+    Update README.md
+
+[33mcommit af6d45f091a0895ca09b07b1426507944e0525c0[m
+Merge: db3acf7 3edaf95
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 10:38:12 2018 +0200
+
+    Merge pull request #4 from wAuner/wa_update_readme
+    
+    updating readme
+
+[33mcommit 3edaf95da34ede8b5da92af88311d9c54390c560[m
+Author: Unknown <venice@posteo.us>
+Date:   Tue Mar 27 10:37:16 2018 +0200
+
+    updating readme
+
+[33mcommit db3acf7969d615ef854e8ac7069f95643d9c3871[m
+Merge: 6963e9f 326a1ad
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 10:27:09 2018 +0200
+
+    Merge pull request #3 from wAuner/wa_update_readme
+    
+    test
+
+[33mcommit 326a1ad77d551e583f70fefb0f5bd20236b50377[m
+Author: Unknown <venice@posteo.us>
+Date:   Tue Mar 27 10:25:00 2018 +0200
+
+    test
+
+[33mcommit 6963e9f2acec7abf89a0800419f040e19139bb1f[m
+Merge: da8f729 2e54040
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 10:20:51 2018 +0200
+
+    Merge pull request #2 from wAuner/wa_update_readme
+    
+    update readme 2
+
+[33mcommit 2e5404070741ed7ced5b20fd6400166604400f93[m
+Author: mimi <venice@posteo.us>
+Date:   Tue Mar 27 10:16:28 2018 +0200
+
+    update readme 2
+
+[33mcommit da8f72900b1b4322f378c11c33de7395d786e267[m
+Merge: 0e4b77c c6e3ce3
+Author: wAuner <18383180+wAuner@users.noreply.github.com>
+Date:   Tue Mar 27 10:11:55 2018 +0200
+
+    Merge pull request #1 from wAuner/wa_update_readme
+    
+    update readme
+
+[33mcommit c6e3ce3b4979508342ebee1d527c08e400c5a465[m
+Author: mimi <venice@posteo.us>
+Date:   Tue Mar 27 10:10:10 2018 +0200
+
+    update readme
+
+[33mcommit 0e4b77c0919d004629c46b75e8a38d509083451d[m
+Author: mimi <venice@posteo.us>
+Date:   Tue Mar 27 10:08:03 2018 +0200
+
+    initial commit
