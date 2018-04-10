@@ -36,17 +36,17 @@ class WaypointUpdater(object):
 
 
         self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
-        
+
         # contains a list of (x,y) tuples for all waypoints
         self.waypoints_2d = None
         # KD tree of the x,y waypoints to increase lookup time
         self.waypoint_tree = None
-        # stores the raw pose message        
+        # stores the raw pose message
         self.pose_msg = None
 
         # stores the raw waypoint message of type styx_msgs/Lane
         self.base_waypoints_msg = None
-        
+
         self.publisher_loop(50)
 
     def publisher_loop(self, frequency):
@@ -57,7 +57,7 @@ class WaypointUpdater(object):
         -frequency: int, the frequency with which to call the publishers
 
         returns: Nothing
-        
+
         """
         rate = rospy.Rate(frequency)
 
@@ -69,8 +69,8 @@ class WaypointUpdater(object):
 
     def pose_cb(self, msg):
         """
-        
-        Task: Processes the messages which contain the current 
+
+        Task: Processes the messages which contain the current
               position of the vehicle in map coordinates
         arguments:
         - msg: message type geometry_msgs/PoseStamped
@@ -78,7 +78,7 @@ class WaypointUpdater(object):
         returns: Nothing
 
         ROS integration
-        ===        
+        ===
         Type: Callback
         Topic: /current_pose
         msg_type: geometry_msgs/PoseStamped
@@ -96,7 +96,7 @@ class WaypointUpdater(object):
             float64 x
             float64 y
             float64 z
-            float64 w        
+            float64 w
         """
         self.pose_msg = msg
         # check if base waypoints have been loaded
@@ -107,12 +107,12 @@ class WaypointUpdater(object):
 
     def waypoints_cb(self, waypoint_msg):
         """
-        Task: Processes the waypoints message which contains all of the track's waypoints in map coordinates. 
+        Task: Processes the waypoints message which contains all of the track's waypoints in map coordinates.
               Needs only to run once, because the waypoints are sent only once at the beginning.
         arguments:
         - waypoints: message type styx_msgs/Lane
         returns: Nothing
-        
+
         ROS integration:
         ===
         Type: Callback
@@ -152,8 +152,8 @@ class WaypointUpdater(object):
               geometry_msgs/Vector3 angular
                 float64 x
                 float64 y
-                float64 z     
-        
+                float64 z
+
         """
         self.base_waypoints_msg = waypoint_msg
         if not self.waypoints_2d:
@@ -161,7 +161,7 @@ class WaypointUpdater(object):
             self.waypoint_tree = KDTree(self.waypoints_2d)
 
     def publish_waypoints(self, closest_idx):
-        """        
+        """
         Task: Invokes the waypoint publisher and publishes the nearest waypoints to the
               /final_waypoints topic.
         arguments:
@@ -207,7 +207,7 @@ class WaypointUpdater(object):
                 float64 x
                 float64 y
                 float64 z
-        
+
         """
         lane = Lane()
         lane.waypoints = self.base_waypoints_msg.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
@@ -215,7 +215,7 @@ class WaypointUpdater(object):
 
     def get_nearest_waypoint_idx(self):
         """
-        Task: Finds the nearest waypoint according to the car's current position 
+        Task: Finds the nearest waypoint according to the car's current position
               and returns the index of that waypoint
         returns: int, index of nearest waypoint in self.waypoints_2d
         """
@@ -231,7 +231,7 @@ class WaypointUpdater(object):
         wp_vec = closest_coord - prev_coord
         car_vec = closest_coord - current_pos
 
-        # calculate dot product between the two vectors 
+        # calculate dot product between the two vectors
         # to determine if  closest point is ahead of car
         # -> same heading if dot product is > 0
         dot_product = np.dot(wp_vec, car_vec)
@@ -239,7 +239,7 @@ class WaypointUpdater(object):
         # if the closest point is not ahead of the vehicle, choose the next point
         if dot_product < 0:
             closest_idx = (closest_idx + 1) % len(self.waypoints_2d)
-        
+
         return closest_idx
 
 

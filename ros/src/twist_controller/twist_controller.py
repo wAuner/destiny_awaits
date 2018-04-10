@@ -28,7 +28,7 @@ class Controller(object):
         self.max_lat_accel = parmams['max_lat_accel']
         self.max_steer_angle = parmams['max_steer_angle']
 
-        self.pid_accel = PID.PID(0.3,0.05,0.05, mn = self.decel_limit, mx = self.accel_limit)
+        self.pid_accel = PID.PID(0.3,0.05,0.3, mn = self.decel_limit, mx = self.accel_limit)
 
 
 
