@@ -21,10 +21,15 @@ class TLDetector(object):
         # set log_level to DEBUG mode in order to log traffic light ground truth
         rospy.init_node('tl_detector', log_level=rospy.DEBUG)
         
+        # stores the raw pose message
         self.pose = None
+        # stores the raw waypoint message of type styx_msgs/Lane
         self.waypoints = None
+        # stores the raw camera image message of type styx_msgs/TrafficLightArray
         self.camera_image = None
+        # stores the raw traffic light message of type styx_msgs/Image
         self.lights = []
+        # flag that is set to true when firts images come in
         self.has_image = True
 
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
@@ -49,9 +54,12 @@ class TLDetector(object):
         self.light_classifier = TLClassifier()
         self.listener = tf.TransformListener()
 
+        # state of the upcomming traffic light
         self.state = TrafficLight.UNKNOWN
+        # state of the previous traffic light
         self.last_state = TrafficLight.UNKNOWN
-        self.last_wp = -1
+        # stores coords of the stop line in front of last traffic lights
+        self.last_wp = -1 # is set to -1 in case the traffic light is not red
         self.state_count = 0
 
         # contains a list of (x,y) tuples for all waypoints
@@ -120,6 +128,41 @@ class TLDetector(object):
             self.waypoint_tree = KDTree(self.waypoints_2d)
 
     def traffic_cb(self, msg):
+        """Identifies red lights in the incoming camera image and publishes the index
+            of the waypoint closest to the red light's stop line to /traffic_waypoint
+
+        Args:
+            msg (TrafficLightArray): Array of TrafficLight objects
+
+        ROS integration:
+        ===
+        Type: Callback
+        Topic: /vehicle/traffic_lights
+        msg_type: styx_msgs/TrafficLightArray
+
+        Header header
+        styx_msgs/TrafficLight[] lights
+            geometry_msgs/PoseStamped pose
+                std_msgs/Header header
+                  uint32 seq
+                  time stamp
+                  string frame_id
+                geometry_msgs/Pose pose
+                  geometry_msgs/Point position
+                    float64 x
+                    float64 y
+                    float64 z
+                  geometry_msgs/Quaternion orientation
+                    float64 x
+                    float64 y
+                    float64 z
+                    float64 w
+            uint8 state
+                uint8 UNKNOWN=4
+                uint8 GREEN=2
+                uint8 YELLOW=1
+                uint8 RED=0
+        """
         self.lights = msg.lights
 
     def image_cb(self, msg):
@@ -129,6 +172,11 @@ class TLDetector(object):
         Args:
             msg (Image): image from car-mounted camera
 
+        ROS integration:
+        ===
+        Type: Callback
+        Topic: /image_color
+        msg_type: sensor_msgs.msg/Image
         """
         self.has_image = True
         self.camera_image = msg
