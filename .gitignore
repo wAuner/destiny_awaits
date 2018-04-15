@@ -5,4 +5,4 @@ devel
 
 profile.tmp
 
-.vscode/
+.vscode/ros/src/tl_detector/light_classification/frozen_inference_graph.pb
