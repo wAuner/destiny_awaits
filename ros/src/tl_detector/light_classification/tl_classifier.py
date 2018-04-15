@@ -64,7 +64,12 @@ class TLClassifier(object):
         pass
 
     def get_classification(self, image):
+
+
+
         """Determines the color of the traffic light in the image
+
+        WORK IN PROGRESS // NOT FINISHED // HOPEFULLY TESTABLE
 
         Args:
             image (cv::Mat): image containing the traffic light
@@ -110,20 +115,8 @@ class TLClassifier(object):
                     elif class_name == 'Yellow':
                         self.current_light = TrafficLight.YELLOW
 
-                    # Depth estimation
-                    # Disabled because /vehicle/traffic_lights topic is available to waypoint updater
-                    # Detected light is assumed to be the closest one
 
 
-            # Visualization of the results of a detection
-            # Disabled to remove dependency on aobject detection API
-            # vis_util.visualize_boxes_and_labels_on_image_array(image, boxes, classes, scores,
-            #                                                    self.label_dict,
-            #                                                    use_normalized_coordinates=True,
-            #                                                    line_thickness=8)
-
-        # Set it to object attribute for visualization topic output
-        # Can be disabled to gain a few ms in performance
         self.image_np_output = image
 
         return self.current_light
