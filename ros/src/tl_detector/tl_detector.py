@@ -40,9 +40,10 @@ class TLDetector(object):
         self.config = yaml.load(config_string)
 
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
+        #self.
 
         self.bridge = CvBridge()
-        self.light_classifier = TLClassifier()
+        self.light_classifier = TLClassifier(True)
         self.listener = tf.TransformListener()
 
         self.state = TrafficLight.UNKNOWN
@@ -50,7 +51,9 @@ class TLDetector(object):
         self.last_wp = -1
         self.state_count = 0
 
+
         rospy.spin()
+
 
     def pose_cb(self, msg):
         self.pose = msg
@@ -77,7 +80,8 @@ class TLDetector(object):
         '''
         Publish upcoming red lights at camera frequency.
         Each predicted state has to occur `STATE_COUNT_THRESHOLD` number
-        of times till we start using it. Otherwise the previous stable state is
+        of times till we start using it. Otherwise the previous stable state isself.prev_light_loc = None
+            return False
         used.
         '''
         if self.state != state:
@@ -100,7 +104,7 @@ class TLDetector(object):
         Returns:
 	    int: index of the closest waypoint in self.waypoints
         """
-        closest_idx = self.waypoint_tree.query([x, y], 1)[1]image_cb
+        closest_idx = self.waypoint_tree.query([x, y], 1)[1]
         return closest_idx
 
     def get_light_state(self, light):
@@ -112,7 +116,7 @@ class TLDetector(object):
         """
 	# only for test, just return
 
-         if(not self.has_image):
+        if(not self.has_image):
             self.prev_light_loc = None
             return False
 
@@ -131,7 +135,8 @@ class TLDetector(object):
         closest_light = None
         line_wp_idx = None
 
-        # List of positions that correspond to the line to stop in front of for a given intersection
+        # List of positions that correspond to the line to stop in front of for a givenself.prev_light_loc = None
+
         stop_line_positions = self.config['stop_line_positions']
         if(self.pose):
             car_wp_idx = self.get_closest_waypoint(self.pose.pose.position.x, self.pose.pose.position.y)

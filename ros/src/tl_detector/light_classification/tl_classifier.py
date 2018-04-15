@@ -1,4 +1,5 @@
 from styx_msgs.msg import TrafficLight
+import os
 import tensorflow as tf
 import numpy as np
 import time
@@ -17,16 +18,16 @@ class TLClassifier(object):
 
         # Load the right models
         if self.simulation is True:
-            self.checkpoint = working_dir + 'frozen_inference_graph.pb'
+            self.checkpoint = working_dir + '/frozen_inference_graph.pb'
         else:
-            self.checkpoint = working_dir + 'frozen_inference_graph.pb'
+            self.checkpoint = working_dir + '/frozen_inference_graph.pb'
 
         # Create a label dictionary
         item_green = {'id': 5, 'name': u'Green'}
         item_red = {'id': 3, 'name': u'Red'}
         item_yellow = {'id': 1, 'name': u'Yellow'}
 
-        self.label_dict = {1: item_green, 2: item_red, 3: item_yellow}
+        self.label_dict = {5: item_green, 3: item_red, 1: item_yellow}
 
         # Build the model
         self.image_np_output = None
@@ -104,6 +105,7 @@ class TLClassifier(object):
                 # Get class name for detections with high enough scores
                 if scores is None or scores[i] > classification_threshold:
                     class_name = self.label_dict[classes[i]]['name']
+
 
                     # Set default state to unknown
                     self.current_light = TrafficLight.UNKNOWN
