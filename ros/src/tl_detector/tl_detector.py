@@ -25,7 +25,6 @@ class TLDetector(object):
         self.waypoint_tree = None
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
-
         '''
         /vehicle/traffic_lights provides you with the location of the traffic light in 3D map space and
         helps you acquire an accurate ground truth data source for the traffic light
@@ -43,7 +42,6 @@ class TLDetector(object):
         #self.
 
         self.bridge = CvBridge()
-        self.light_classifier = TLClassifier(True)
         self.listener = tf.TransformListener()
 
         self.state = TrafficLight.UNKNOWN
@@ -51,6 +49,7 @@ class TLDetector(object):
         self.last_wp = -1
         self.state_count = 0
 
+        self.light_classifier = TLClassifier(True)
 
         rospy.spin()
 
@@ -65,6 +64,7 @@ class TLDetector(object):
             self.waypoint_tree =  KDTree(self.waypoints_2d)
 
     def traffic_cb(self, msg):
+        #print("Received traffic light array", msg.lights)
         self.lights = msg.lights
 
     def image_cb(self, msg):
@@ -73,6 +73,7 @@ class TLDetector(object):
             Args:
 	    msg (Image): image from car-mounted camera
         """
+        print("Received an image")
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
@@ -122,6 +123,7 @@ class TLDetector(object):
 
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
 
+
         #Get classificationhttp://github.com/
         return self.light_classifier.get_classification(cv_image)
 
@@ -141,7 +143,7 @@ class TLDetector(object):
         if(self.pose):
             car_wp_idx = self.get_closest_waypoint(self.pose.pose.position.x, self.pose.pose.position.y)
             #find the closest visible traffic light if one exists
-            diff = len(self.waypoints.waypoints)
+            diff = len(self.waypoints.waypoints) #This value is 10902
             for i, light in enumerate(self.lights):
 	        #Get stop line waypoint index
 	        line = stop_line_positions[i]
@@ -154,7 +156,9 @@ class TLDetector(object):
 	            line_wp_idx = temp_wp_idx
 
         if closest_light:
+
             state = self.get_light_state(closest_light)
+            print("light state is", state)
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN

@@ -23,11 +23,25 @@ class TLClassifier(object):
             self.checkpoint = working_dir + '/frozen_inference_graph.pb'
 
         # Create a label dictionary
-        item_green = {'id': 5, 'name': u'Green'}
-        item_red = {'id': 3, 'name': u'Red'}
-        item_yellow = {'id': 1, 'name': u'Yellow'}
+        item_yellow = {'id': 1, 'name': 'Yellow'}
+        item_red_left = {'id': 2, 'name': 'RedLeft'}
+        item_red = {'id': 3, 'name': 'Red'}
+        item_green_left = {'id': 4, 'name': 'GreenLeft'}
+        item_green = {'id': 5, 'name': 'Green'}
+        item_off = {'id': 6, 'name': 'Off'}
+        item_green_right = {'id': 7, 'name': 'GreenRight'}
+        item_green_straight = {'id': 8, 'name': 'GreenStraight'}
+        item_green_straight_right = {'id': 9, 'name': 'GreenStraightRight'}
+        item_red_right = {'id': 10, 'name': 'RedRight'}
+        item_red_straight = {'id': 11, 'name': 'RedStraight'}
+        item_red_straight_left = {'id': 12, 'name': 'RedStraightLeft'}
+        item_green_straight_left = {'id': 13, 'name': 'GreenStraightLeft'}
 
-        self.label_dict = {5: item_green, 3: item_red, 1: item_yellow}
+
+        self.label_dict = {1: item_yellow, 2: item_red_left, 3: item_red,
+                          4: item_green_left, 5: item_green, 6: item_off, 7: item_green_right,
+                          8: item_green_straight, 9: item_green_straight_right, 10: item_red_right,
+                          11: item_red_straight, 12: item_red_straight_left, 13: item_green_straight_left}
 
         # Build the model
         self.image_np_output = None
@@ -84,20 +98,23 @@ class TLClassifier(object):
 
             # create image as np.ndarray
             np_exp_image = np.expand_dims(image, axis=0)
-
             # get the detections and scores and bounding boxes
             with self.detection_graph.as_default():
                 (boxes, scores, classes, num) = self.sess.run( [self.detection_boxes, self.detection_scores,
                                                                 self.detection_classes, self.num_detections],
                                                                feed_dict={self.image_tensor: np_exp_image})
 
+            #PATH_TO_LABELS = 'tl_label_map.pbtxt'
             # create np arrays
             boxes = np.squeeze(boxes)
             scores = np.squeeze(scores)
             classes = np.squeeze(classes).astype(np.int32)
+            num = np.squeeze(num)
 
             # Set a Classification threshold
             classification_threshold = .50
+
+            print("classification complete")
 
             # Iterate the boxes to get all detections
             for i in range(boxes.shape[0]):
@@ -109,6 +126,8 @@ class TLClassifier(object):
 
                     # Set default state to unknown
                     self.current_light = TrafficLight.UNKNOWN
+
+                    print("Class Name is", class_name)
 
                     if class_name == 'Red':
                         self.current_light = TrafficLight.RED
