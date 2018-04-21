@@ -105,7 +105,7 @@ class TLClassifier(object):
             # Set a Classification threshold
             classification_threshold = .5
 
-            print("classification complete")
+            #print("classification complete")
 
             # Iterate the boxes to get all detections
             for i in range(boxes.shape[0]):
