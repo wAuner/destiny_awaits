@@ -49,7 +49,7 @@ class TLDetector(object):
         self.last_wp = -1
         self.state_count = 0
 
-        self.light_classifier = TLClassifier(True)
+        self.light_classifier = TLClassifier()
 
         rospy.spin()
 
@@ -73,7 +73,7 @@ class TLDetector(object):
             Args:
 	    msg (Image): image from car-mounted camera
         """
-        print("Received an image")
+        #print("Received an image")
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
@@ -121,9 +121,11 @@ class TLDetector(object):
             self.prev_light_loc = None
             return False
 
-        cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
 
-
+        cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "rgb8")
+        #print(cv_image.shape)
+        #print(cv_image.dtype)
+        #cv_image1 = self.light_classifier.load_image_into_numpy_array(cv_image)
         #Get classificationhttp://github.com/
         return self.light_classifier.get_classification(cv_image)
 
@@ -158,7 +160,7 @@ class TLDetector(object):
         if closest_light:
 
             state = self.get_light_state(closest_light)
-            print("light state is", state)
+            #print("light state is", state)
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN

@@ -4,8 +4,11 @@ import tensorflow as tf
 import numpy as np
 import time
 
+
+import matplotlib.pyplot as plt
+
 class TLClassifier(object):
-    def __init__(self, simulation):
+    def __init__(self):
 
         # default status
         self.current_status = TrafficLight.UNKNOWN
@@ -13,14 +16,8 @@ class TLClassifier(object):
         #working directory
         working_dir = os.path.dirname(os.path.realpath(__file__))
 
-        # flag to switch between real and sim trained classifier
-        self.simulation = simulation
-
-        # Load the right models
-        if self.simulation is True:
-            self.checkpoint = working_dir + '/frozen_inference_graph.pb'
-        else:
-            self.checkpoint = working_dir + '/frozen_inference_graph.pb'
+        #working model
+        self.checkpoint = working_dir + '/frozen_inference_graph.pb'
 
         # Create a label dictionary
         item_yellow = {'id': 1, 'name': 'Yellow'}
@@ -45,7 +42,7 @@ class TLClassifier(object):
 
         # Build the model
         self.image_np_output = None
-        self.detection_graph = tf.Graph()
+        self.compute_graph = tf.Graph()
 
         self.current_light = TrafficLight.UNKNOWN
 
@@ -54,37 +51,30 @@ class TLClassifier(object):
         config.gpu_options.allow_growth = True
 
         # Create graph
-        with self.detection_graph.as_default():
-            graph_definition = tf.GraphDef()
+        with self.compute_graph.as_default():
+            graph_def= tf.GraphDef()
 
-            # load pre trained model
+            # load trained model
             with tf.gfile.GFile(self.checkpoint, 'rb') as fid:
-                serial_graph = fid.read()
-                graph_definition.ParseFromString(serial_graph)
-                tf.import_graph_def(graph_definition, name='')
+                graph_def.ParseFromString(fid.read())
+                tf.import_graph_def(graph_def, name='')
 
-            # Create a reusable sesion attribute
-            self.sess = tf.Session(graph=self.detection_graph, config=config)
+            self.sess = tf.Session(graph=self.compute_graph, config=config)
 
-        # get parameters by names
-        self.image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
-        self.detection_boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
-        # scores
-        self.detection_scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
-        self.detection_classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
-        self.num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
+        # parameter names of tensorflow
+        self.image_tensor = self.compute_graph.get_tensor_by_name('image_tensor:0')
+        self.detection_boxes = self.compute_graph.get_tensor_by_name('detection_boxes:0')
+        # scores of detections
+        self.detection_scores = self.compute_graph.get_tensor_by_name('detection_scores:0')
+        self.detection_classes = self.compute_graph.get_tensor_by_name('detection_classes:0')
+        self.num_detections = self.compute_graph.get_tensor_by_name('num_detections:0')
 
         self.activated = True  # flag to turn off classifier dufidring development
-
         pass
 
-    def get_classification(self, image):
-
-
+    def get_classification( self, image):
 
         """Determines the color of the traffic light in the image
-
-        WORK IN PROGRESS // NOT FINISHED // HOPEFULLY TESTABLE
 
         Args:
             image (cv::Mat): image containing the traffic light
@@ -96,10 +86,11 @@ class TLClassifier(object):
         # Run the classifier if activated flag is true
         if self.activated is True:
 
-            # create image as np.ndarray
+            # create image as numpy array
+            #image1 = load_image_into_numpy_array(image)
             np_exp_image = np.expand_dims(image, axis=0)
             # get the detections and scores and bounding boxes
-            with self.detection_graph.as_default():
+            with self.compute_graph.as_default():
                 (boxes, scores, classes, num) = self.sess.run( [self.detection_boxes, self.detection_scores,
                                                                 self.detection_classes, self.num_detections],
                                                                feed_dict={self.image_tensor: np_exp_image})
@@ -112,7 +103,7 @@ class TLClassifier(object):
             num = np.squeeze(num)
 
             # Set a Classification threshold
-            classification_threshold = .50
+            classification_threshold = .5
 
             print("classification complete")
 
@@ -135,7 +126,6 @@ class TLClassifier(object):
                         self.current_light = TrafficLight.GREEN
                     elif class_name == 'Yellow':
                         self.current_light = TrafficLight.YELLOW
-
 
 
         self.image_np_output = image
