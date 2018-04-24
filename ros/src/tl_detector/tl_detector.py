@@ -25,7 +25,6 @@ class TLDetector(object):
         self.waypoint_tree = None
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
-
         '''
         /vehicle/traffic_lights provides you with the location of the traffic light in 3D map space and
         helps you acquire an accurate ground truth data source for the traffic light
@@ -40,9 +39,9 @@ class TLDetector(object):
         self.config = yaml.load(config_string)
 
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
+        #self.
 
         self.bridge = CvBridge()
-        self.light_classifier = TLClassifier()
         self.listener = tf.TransformListener()
 
         self.state = TrafficLight.UNKNOWN
@@ -50,7 +49,10 @@ class TLDetector(object):
         self.last_wp = -1
         self.state_count = 0
 
+        self.light_classifier = TLClassifier()
+
         rospy.spin()
+
 
     def pose_cb(self, msg):
         self.pose = msg
@@ -62,6 +64,7 @@ class TLDetector(object):
             self.waypoint_tree =  KDTree(self.waypoints_2d)
 
     def traffic_cb(self, msg):
+        #print("Received traffic light array", msg.lights)
         self.lights = msg.lights
 
     def image_cb(self, msg):
@@ -70,6 +73,7 @@ class TLDetector(object):
             Args:
 	    msg (Image): image from car-mounted camera
         """
+        #print("Received an image")
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
@@ -77,7 +81,8 @@ class TLDetector(object):
         '''
         Publish upcoming red lights at camera frequency.
         Each predicted state has to occur `STATE_COUNT_THRESHOLD` number
-        of times till we start using it. Otherwise the previous stable state is
+        of times till we start using it. Otherwise the previous stable state isself.prev_light_loc = None
+            return False
         used.
         '''
         if self.state != state:
@@ -111,15 +116,18 @@ class TLDetector(object):
 	    int: ID of traffic light color (specified in styx_msgs/TrafficLight)
         """
 	# only for test, just return
-        return light.state       
-        # if(not self.has_image):
-        #    self.prev_light_loc = None
-        #    return False
 
-        #cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
+        if(not self.has_image):
+            self.prev_light_loc = None
+            return False
 
-        #Get classification
-        #return self.light_classifier.get_classification(cv_image)
+
+        cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "rgb8")
+        #print(cv_image.shape)
+        #print(cv_image.dtype)
+        #cv_image1 = self.light_classifier.load_image_into_numpy_array(cv_image)
+        #Get classificationhttp://github.com/
+        return self.light_classifier.get_classification(cv_image)
 
     def process_traffic_lights(self):
         """Finds closest visible traffic light, if one exists, and determines its
@@ -131,12 +139,13 @@ class TLDetector(object):
         closest_light = None
         line_wp_idx = None
 
-        # List of positions that correspond to the line to stop in front of for a given intersection
+        # List of positions that correspond to the line to stop in front of for a givenself.prev_light_loc = None
+
         stop_line_positions = self.config['stop_line_positions']
         if(self.pose):
             car_wp_idx = self.get_closest_waypoint(self.pose.pose.position.x, self.pose.pose.position.y)
             #find the closest visible traffic light if one exists
-            diff = len(self.waypoints.waypoints)
+            diff = len(self.waypoints.waypoints) #This value is 10902
             for i, light in enumerate(self.lights):
 	        #Get stop line waypoint index
 	        line = stop_line_positions[i]
@@ -149,7 +158,9 @@ class TLDetector(object):
 	            line_wp_idx = temp_wp_idx
 
         if closest_light:
+
             state = self.get_light_state(closest_light)
+            #print("light state is", state)
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
