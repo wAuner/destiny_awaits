@@ -8,3 +8,6 @@ profile.tmp
 .vscode/
 
 ros/src/tl_detector/light_classification/frozen_inference_graph.pb
+
+installation/*.pb
+installation/*.tar

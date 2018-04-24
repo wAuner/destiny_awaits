@@ -47,10 +47,10 @@ then
     REPO_TARGET=~/Desktop/destiny_awaits
 
     # clone repo and set up env
-    git clone https://github.com/wAuner/destiny_awaits.git 
+    git clone https://github.com/wAuner/destiny_awaits.git $REPO_TARGET
      
     # copy inference graph into project directory
-    cp $INSTALL_DIR/frozen_inference_graph.pb $REPO_TARGET/ros/src/tl_detector/light_classification
+    cp $INSTALL_DIR/frozen_inference_graph.pb $REPO_TARGET/ros/src/tl_detector/light_classification/frozen_inference_graph.pb
 
     if source activate rospy 
     then
@@ -92,6 +92,7 @@ bash $INSTALL_DIR/websockets_install.sh
 echo "Installation process complete."
 echo "Testing tensorflow-gpu:"
 
+source ~/.bashrc
 rpy
 python $INSTALL_DIR/tf_test.py
 
