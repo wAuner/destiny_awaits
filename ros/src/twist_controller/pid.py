@@ -22,9 +22,15 @@ class PID(object):
 
         a1 = error - self.last_error
         if a1 != 0.:
+<<<<<<< HEAD
         	derivative = a1 / sample_time;
     	else:
     		derivative = 0
+=======
+            derivative = a1 / sample_time;
+        else:
+            derivative = 0
+>>>>>>> 62ce3df1d092ee358fce205ed45dd98d8475f805
 
         val = self.kp * error + self.ki * integral + self.kd * derivative;
 

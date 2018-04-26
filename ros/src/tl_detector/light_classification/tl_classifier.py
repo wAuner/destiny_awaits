@@ -3,9 +3,12 @@ import os
 import tensorflow as tf
 import numpy as np
 import time
+<<<<<<< HEAD
 
 
 import matplotlib.pyplot as plt
+=======
+>>>>>>> 62ce3df1d092ee358fce205ed45dd98d8475f805
 
 class TLClassifier(object):
     def __init__(self):

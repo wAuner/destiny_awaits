@@ -5,4 +5,13 @@ devel
 
 profile.tmp
 
+<<<<<<< HEAD
 .vscode/ros/src/tl_detector/light_classification/frozen_inference_graph.pb
+=======
+.vscode/
+
+ros/src/tl_detector/light_classification/frozen_inference_graph.pb
+
+installation/*.pb
+installation/*.tar
+>>>>>>> 62ce3df1d092ee358fce205ed45dd98d8475f805

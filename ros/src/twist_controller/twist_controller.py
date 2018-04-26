@@ -45,12 +45,20 @@ class Controller(object):
 
         current_velocity = self.vel_LP.filt(current_velocity)
 
+<<<<<<< HEAD
     	diff_vel = linear_vel - current_velocity
+=======
+        diff_vel = linear_vel - current_velocity
+>>>>>>> 62ce3df1d092ee358fce205ed45dd98d8475f805
 
 
 
 
+<<<<<<< HEAD
     	steer = self.yaw_cont.get_steering(linear_vel,angular_vel,current_velocity)
+=======
+        steer = self.yaw_cont.get_steering(linear_vel,angular_vel,current_velocity)
+>>>>>>> 62ce3df1d092ee358fce205ed45dd98d8475f805
 
 
         brake = 0
