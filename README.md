@@ -3,7 +3,7 @@
 
 This is our project repo for the final System Integration Project within the Self-Driving Car Engineer Nanodegree Program.
 
-##Team Members
+## Team Members
 
  * Andreas Daiminger    
  * Winfried Auner       
@@ -15,7 +15,21 @@ This is our project repo for the final System Integration Project within the Sel
 
 ![](imgs/final-project-ros-graph-v2.png)
 
+### DWB Node
 
+The DBW Node part can be split up into 3 part:
+
+ * #### steering
+
+   For steering we used the provided yaw_controller. To get a smoother result we implemented a low-pass filter for the velocity.
+
+ * #### throttle
+
+   For throttle we used the provided PID controller with empiric adjusted values. To smoother the transition between the diffrent        velocitys we used a low-pass filter.
+
+ * #### brake
+
+   The brake is depended with the throttle. If the throttle is beneath a certain threshold the brake value will be set. The value can be calculated using the vehicle mass, the wheel radius and the velocity difference. If the vehicle stays still, the brake will be set to a maximum value.
 
 
 ### Native Installation
