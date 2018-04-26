@@ -9,7 +9,7 @@ This is our project repo for the final System Integration Project within the Sel
  * Winfried Auner       
  * Mike Ni              
  * Steven Lee           
- * Markus Penzel        sqare@gmx.de
+ * Markus Penzel
 
 ## Project structure
 
