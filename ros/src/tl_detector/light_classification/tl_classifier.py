@@ -23,25 +23,14 @@ class TLClassifier(object):
         self.checkpoint = working_dir + '/frozen_inference_graph.pb'
 
         # Create a label dictionary
-        item_yellow = {'id': 1, 'name': 'Yellow'}
-        item_red_left = {'id': 2, 'name': 'RedLeft'}
-        item_red = {'id': 3, 'name': 'Red'}
-        item_green_left = {'id': 4, 'name': 'GreenLeft'}
-        item_green = {'id': 5, 'name': 'Green'}
-        item_off = {'id': 6, 'name': 'Off'}
-        item_green_right = {'id': 7, 'name': 'GreenRight'}
-        item_green_straight = {'id': 8, 'name': 'GreenStraight'}
-        item_green_straight_right = {'id': 9, 'name': 'GreenStraightRight'}
-        item_red_right = {'id': 10, 'name': 'RedRight'}
-        item_red_straight = {'id': 11, 'name': 'RedStraight'}
-        item_red_straight_left = {'id': 12, 'name': 'RedStraightLeft'}
-        item_green_straight_left = {'id': 13, 'name': 'GreenStraightLeft'}
+        item_green = {'id': 1, 'name': 'Green'}
+        item_red = {'id': 2, 'name': 'Red'}
+        item_yellow = {'id': 3, 'name': 'Yellow'}
+        item_off = {'id': 4, 'name': 'Off'}
 
 
-        self.label_dict = {1: item_yellow, 2: item_red_left, 3: item_red,
-                          4: item_green_left, 5: item_green, 6: item_off, 7: item_green_right,
-                          8: item_green_straight, 9: item_green_straight_right, 10: item_red_right,
-                          11: item_red_straight, 12: item_red_straight_left, 13: item_green_straight_left}
+        self.label_dict = {1: item_green, 2: item_red, 3: item_yellow,
+                          4: item_off}
 
         # Build the model
         self.image_np_output = None
