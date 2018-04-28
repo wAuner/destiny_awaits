@@ -7,7 +7,7 @@ This is our project repo for the final System Integration Project within the Sel
 
  * Andreas Daiminger    
  * Winfried Auner       
- * Mike Ni              
+ * Yingxiang Ni              
  * Steven Lee           
  * Markus Penzel
 
@@ -31,6 +31,19 @@ The DBW Node part can be split up into 3 part:
 
    The brake is depended with the throttle. If the throttle is beneath a certain threshold the brake value will be set. The value can be calculated using the vehicle mass, the wheel radius and the velocity difference. If the vehicle stays still, the brake will be set to a maximum value.
 
+
+### Traffic Light Node
+
+For the traffic light detection we used a faster RCNN model and trained it, with the [bosch traffic light dataset](https://hci.iwr.uni-heidelberg.de/node/6132). After training we had some issues predicting the right classes in the simulator and at the ros bag data, so we included [a labeld ros bag and a labeld simulator dataset](https://drive.google.com/file/d/0B-Eiyn-CUQtxdUZWMkFfQzdObUE/view).
+
+Here are some examples of the simulator track:
+![](imgs/wa_sim_detec.jpg) 
+![](imgs/wa_sim_detec1.jpg)
+
+
+Here are examples of the bag trainingset:
+![](imgs/wa_bag_detec.jpg)
+![](imgs/wa_bag_detec1.jpg)
 
 ### Native Installation
 
